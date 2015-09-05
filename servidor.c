@@ -43,21 +43,23 @@ int main()
 
 	//-------------------------------------------------------------
 
+	char* arrTamanio=malloc(4);
+		int tamanioEnviado = recv(cliente,arrTamanio,3,0);
+		arrTamanio[tamanioEnviado]='\0';
 
-	char* tamanioc=malloc(4);
-	recv(cliente,tamanioc,3,0);
-	tamanioc[3]='\0';
-	int tamanio= atoi(tamanioc);
-	char* buffer= malloc(tamanio);
-	send(cliente,"Enviame el mensaje: ",21,0);
-	recv(cliente,buffer,tamanio-1,MSG_WAITALL);
-    buffer[tamanio-1]='\0';
-	printf("Mensaje Recibido: %s",buffer);
-	free(buffer);
+		int tamanio= atoi(arrTamanio);
+		char* buffer= malloc(tamanio);
+		send(cliente,"Enviame el mensaje: ",21,0);
 
-	//for(;;);
+		int bytesRecibidos = recv(cliente,buffer,tamanio-1,MSG_WAITALL);
+	    buffer[bytesRecibidos]='\0';
 
-	return 0;
+	    printf("Mensaje Recibido: %s",buffer);
+		free(buffer);
+
+		//for(;;);
+
+		return 0;
 }
 
 
